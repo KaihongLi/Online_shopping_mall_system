@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.fzu.tmall.mapper.ProductMapper">
+	<resultMap id="productMap" type="product">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="name" property="name" />
+		<result column="subTitle" property="subTitle" />
+		<result column="originalPrice" property="originalPrice" />
+		<result column="promotePrice" property="promotePrice" />
+		<result column="stock" property="stock" />
+		<result column="createDate" jdbcType="TIMESTAMP"
+			property="createDate" />
+		<association property="category">
+			<id property="id" column="cid" />
+			<result property="name" column="cname" />
+		</association>
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		p.id as id, p.name as name, subTitle, originalPrice,
+		promotePrice, stock,
+		cid, createDate, c.name as cname
+	</sql>
+
+	<select id="selectById" parameterType="java.lang.Integer"
+		resultMap="productMap">
+		select
+		<include refid="Base_Column_List" />
+		from product as p left join category as c on p.cid=c.id
+		where p.id = #{id}
+	</select>
+
+	<sql id="whereClause">
+		<if test="name != null and name !='' ">
+			and name like concat('%',#{keyword},'%')
+		</if>
+		<if test="cid != null">
+			and cid = #{cid}
+		</if>
+	</sql>
+
+	<select id="selectByConditions" parameterType="map"
+		resultMap="productMap">
+		select
+		<include refid="Base_Column_List" />
+		from product as p left join category as c on p.cid=c.id where 1=1
+		<include refid="whereClause" />
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+
+	<select id="selectCount" parameterType="map" resultType="Integer">
+		select count(*) from product where 1=1 
+		<include refid="whereClause" />
+	</select>
+
+	<delete id="deleteById" parameterType="java.lang.Integer">
+		delete from product
+		where
+		id = #{id}
+	</delete>
+	<insert id="insert" keyColumn="id" keyProperty="id"
+		parameterType="product" useGeneratedKeys="true">
+		insert into product (name,
+		subTitle, originalPrice, promotePrice, stock, cid, createDate)
+		values
+		(#{name}, #{subTitle}, #{originalPrice}, #{promotePrice}, #{stock},
+		#{cid}, #{createDate})
+	</insert>
+
+	<update id="update" parameterType="product">
+		update product
+		set name =
+		#{name},
+		subTitle = #{subTitle},
+		originalPrice = #{originalPrice},
+		promotePrice = #{promotePrice},
+		stock = #{stock},
+		cid = #{category.id},
+		createDate = #{createDate}
+		where id = #{id}
+	</update>
+</mapper>
