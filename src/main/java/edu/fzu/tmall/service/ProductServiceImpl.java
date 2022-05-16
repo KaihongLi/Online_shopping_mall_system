@@ -1,7 +1,6 @@
 
 package edu.fzu.tmall.service;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -11,19 +10,18 @@ import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import edu.fzu.tmall.mapper.CategoryMapper;
 import edu.fzu.tmall.mapper.ProductMapper;
 import edu.fzu.tmall.pojo.Category;
 import edu.fzu.tmall.pojo.Product;
 import edu.fzu.tmall.util.Page;
 
-@Service
+@Service("productService")
 public class ProductServiceImpl implements ProductService {
     @Autowired
     ProductMapper productMapper;
     @Autowired
     CategoryService categoryService;
-    
+
     @Override
     public void add(Product p) {
         productMapper.insert(p);
@@ -44,19 +42,15 @@ public class ProductServiceImpl implements ProductService {
     public Map edit(int id) {
     	Map resultMap=new HashMap<String, Object>();
         Product product = productMapper.selectById(id);
-        setCategory(product);
+        int cid = product.getCategory().getId();
+        Category c = categoryService.get(cid);
+        product.setCategory(c);
         List<Category> categories=categoryService.list();
         resultMap.put("product", product);
         resultMap.put("categories", categories);
         return resultMap;
     }
 
-
-    public void setCategory(Product p){
-        int cid = p.getCategory().getId();
-        Category c = categoryService.get(cid);
-        p.setCategory(c);
-    }
 
     @Override
     public Page<Product> list(Integer cid ,String keyword, Page<Product> page) {

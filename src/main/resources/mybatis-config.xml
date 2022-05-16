@@ -2,36 +2,39 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+	<properties resource="db.properties"/>
 	<settings>
-		<setting name="logImpl" value="log4j2"></setting>
-		<!-- 打开延迟加载的开关 -->
+		<setting name="logImpl" value="log4j2"/>
+		<setting name="cacheEnabled" value="true"/>
+<!--		 打开延迟加载的开关 -->
 		<setting name="lazyLoadingEnabled" value="true" />
 		<!-- 将积极加载改为消息加载，即按需加载 -->
 		<setting name="aggressiveLazyLoading" value="false" />
 	</settings>
+<!--	别名-->
 	<typeAliases>
 		<package name="edu.fzu.tmall.pojo" />
 	</typeAliases>
-	<!--1.配置环境 ，默认的环境id为mysql -->
-	<!-- <environments default="mysql">
-		1.2.配置id为mysql的数据库环境
-		<environment id="mysql">
-			使用JDBC的事务管理
-			<transactionManager type="JDBC" />
-			数据库连接池
-			<dataSource type="POOLED">
-				<property name="driver" value="com.mysql.jdbc.Driver" />
-				<property name="url"
-					value="jdbc:mysql://localhost:3306/tmall?useUnicode=true&amp;characterEncoding=UTF-8" />
-				<property name="username" value="root" />
-				<property name="password" value="123456" />
-			</dataSource>
-		</environment>
-	</environments> -->
+<!--	&lt;!&ndash;1.配置环境 ，默认的环境id为mysql &ndash;&gt;-->
+<!--	<environments default="mysql">-->
+<!--&lt;!&ndash;		1.2.配置id为mysql的数据库环境&ndash;&gt;-->
+<!--		<environment id="mysql">-->
+<!--&lt;!&ndash;			使用JDBC的事务管理&ndash;&gt;-->
+<!--			<transactionManager type="JDBC" />-->
+<!--&lt;!&ndash;			数据库连接池&ndash;&gt;-->
+<!--			<dataSource type="POOLED">-->
+<!--				<property name="driver" value="${mysql.driver}" />-->
+<!--				<property name="url"-->
+<!--					value="${mysql.url}" />-->
+<!--				<property name="username" value="${mysql.username}" />-->
+<!--				<property name="password" value="${mysql.password}" />-->
+<!--			</dataSource>-->
+<!--		</environment>-->
+<!--	</environments>-->
 	<!--2.配置Mapper的位置 -->
 	<!-- <mappers>
 		<mapper resource="edu/fzu/tmall/mapper/UserMapper.xml" />
 	</mappers> -->
-	<!-- <mappers> <package name="edu.fzu.tmall.mapper" /> </mappers> -->
+<!--	 <mappers> <package name="edu.fzu.tmall.mapper" /> </mappers>-->
 
 </configuration>

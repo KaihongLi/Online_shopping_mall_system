@@ -29,11 +29,13 @@ public class Order {
 
     private String status;
 
+    private String statusDesc;
+
     private List<OrderItem> orderItems;
 
     private User user;
-    
-    
+
+
     //以下非数据库字段
     private float total;
 
@@ -143,13 +145,13 @@ public class Order {
     public void setOrderItems(List<OrderItem> orderItems) {
         this.orderItems = orderItems;
     }
-    
-    
-    public static void main(String args[]){
-        Order o  = new Order();
-        o.setStatus("delete");
-        System.out.println(o.getStatusDesc());
-    }
+
+
+//    public static void main(String args[]){
+//        Order o  = new Order();
+//        o.setStatus("delete");
+//        System.out.println(o.getStatusDesc());
+//    }
     public String getStatusDesc(){
         String desc ="未知";
         switch(status){
@@ -201,5 +203,27 @@ public class Order {
     public void setUser(User user) {
         this.user = user;
     }
-    
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", orderCode='" + orderCode + '\'' +
+                ", address='" + address + '\'' +
+                ", post='" + post + '\'' +
+                ", receiver='" + receiver + '\'' +
+                ", mobile='" + mobile + '\'' +
+                ", userMessage='" + userMessage + '\'' +
+                ", createDate=" + createDate +
+                ", payDate=" + payDate +
+                ", deliveryDate=" + deliveryDate +
+                ", confirmDate=" + confirmDate +
+                ", status='" + status + '\'' +
+                ", statusDesc='" + statusDesc + '\'' +
+                ", orderItems=" + orderItems +
+                ", user=" + user +
+                ", total=" + total +
+                ", totalNumber=" + totalNumber +
+                '}';
+    }
 }

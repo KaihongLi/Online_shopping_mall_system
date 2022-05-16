@@ -4,14 +4,16 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:aop="http://www.springframework.org/schema/aop"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans 
-	http://www.springframework.org/schema/beans/spring-beans.xsd 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://www.springframework.org/schema/context
     http://www.springframework.org/schema/context/spring-context.xsd
-    http://www.springframework.org/schema/tx 
+    http://www.springframework.org/schema/tx
     http://www.springframework.org/schema/tx/spring-tx.xsd
-    http://www.springframework.org/schema/aop 
+    http://www.springframework.org/schema/aop
     http://www.springframework.org/schema/aop/spring-aop.xsd">
+	<!-- 引入属性文件-->
+	<context:property-placeholder location="classpath:db.properties"/>
 	<!-- 启用注解扫描，并定义组件查找规则,扫描所有的Bean -->
 	<context:component-scan
 		base-package="edu.fzu.tmall" />
@@ -24,14 +26,14 @@
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<!--数据库驱动 -->
 		<property name="driverClassName"
-			value="com.mysql.cj.jdbc.Driver" />
+			value="${mysql.driver}" />
 		<!--连接数据库的url -->
 		<property name="url"
-			value="jdbc:mysql://localhost:3306/tmall?serverTimezone=UTC&amp;characterEncoding=utf8&amp;useUnicode=true&amp;useSSL=false" />
+			value="${mysql.url}" />
 		<!--连接数据库的用户名 -->
-		<property name="username" value="root" />
+		<property name="username" value="${mysql.username}" />
 		<!--连接数据库的密码 -->
-		<property name="password" value="123456" />
+		<property name="password" value="${mysql.password}" />
 	</bean>
 	<!-- 2配置JDBC模板 -->
 	<bean id="jdbcTemplate"

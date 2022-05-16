@@ -91,6 +91,16 @@ public class Page<T> {
 	public void setRows(List<T> rows) {
 		this.rows = rows;
 	}
-	
-  
+
+
+    @Override
+    public String toString() {
+        return "Page{" +
+                "start=" + start +
+                ", count=" + count +
+                ", total=" + total +
+                ", param='" + param + '\'' +
+                ", rows=" + rows +
+                '}';
+    }
 }
